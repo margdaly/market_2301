@@ -45,7 +45,6 @@ class Market
     total_inventory = Hash.new {|hash, key| hash[key] = {}}
     @vendors.each do |vendor|
       vendor.inventory.each do |item, amount|
-        # require 'pry'; binding.pry
         total_inventory[item] = {:quantity => amount, :vendor => vendors_that_sell(item)}
       end
     end
