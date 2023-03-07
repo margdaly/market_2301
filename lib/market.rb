@@ -39,21 +39,22 @@ class Market
   def total_inventory
     # item => {quantity=>total_inventory(of_item), 
               #vendors=> [vendors_that_sell_item]} 
-    # total_inventory = Hash.new
-    #iterate through vendors array
-      #iterate through each vendors inventory hash
-       #transform.values 
+              #iterate through vendors array
+              #iterate through each vendors inventory hash
+              #transform.values 
+    total_inventory = Hash.new {|hash, key| hash[key] = {}}
     @vendors.each do |vendor|
-      vendor.inventory.transform_values! do |item, amount|
-        item = Hash.new{
-          item[:quantity] = amount,
-          item[:vendors] = vendors_that_sell(item)
-        }
-      
+      vendor.inventory.each do |item, amount|
+        # require 'pry'; binding.pry
+        total_inventory[item] = {:quantity => amount, :vendor => vendors_that_sell(item)}
       end
     end
-    
+    total_inventory
   end
+  
+  
+  # item[:vendors] = vendors_that_sell(item)
+    # require 'pry'; binding.pry
 
   def overstocked_items
     #An item is overstocked if it is sold by more than 1 vendor AND the total quantity is greater than 50.
