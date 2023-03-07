@@ -37,6 +37,25 @@ class Market
   end
 
   def total_inventory
-    #return a hash with items as keys and hash as values - this sub-hash should have two key/value pairs: quantity pointing to total inventory for that item and vendors pointing to an array of the vendors that sell that item.
+    # item => {quantity=>total_inventory(of_item), 
+              #vendors=> [vendors_that_sell_item]} 
+    # total_inventory = Hash.new
+    #iterate through vendors array
+      #iterate through each vendors inventory hash
+       #transform.values 
+    @vendors.each do |vendor|
+      vendor.inventory.transform_values! do |item, amount|
+        item = Hash.new{
+          item[:quantity] = amount,
+          item[:vendors] = vendors_that_sell(item)
+        }
+      
+      end
+    end
+    
+  end
+
+  def overstocked_items
+    #An item is overstocked if it is sold by more than 1 vendor AND the total quantity is greater than 50.
   end
 end
